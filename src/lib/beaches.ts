@@ -22,7 +22,7 @@ export interface Camera {
   url?: string;
   /** Segundos entre fotos (solo image). */
   refresh?: number;
-  /** Foto pequeña para las tarjetas (solo image). */
+  /** Foto pequeña para las tarjetas; en un vídeo, la portada antes de pulsar. */
   thumb?: string;
   /** Canal de YouTube: si está, se inserta su directo actual (el id de vídeo cambia al reiniciar). */
   channel?: string;

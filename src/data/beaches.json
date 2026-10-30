@@ -634,5 +634,108 @@
         "credit": "Imagen: Windy.com"
       }
     ]
+  },
+  {
+    "id": "a-frouxeira",
+    "name": "A Frouxeira",
+    "municipality": "Valdoviño",
+    "province": "A Coruña",
+    "zone": "ferrolterra",
+    "lat": 43.6125,
+    "lon": -8.1701,
+    "cams": [
+      {
+        "id": "windy-valdovino-frouxeira",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1662188335",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1662188335/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1662188335/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "noia",
+    "name": "Noia",
+    "municipality": "Noia",
+    "province": "A Coruña",
+    "zone": "rias-baixas",
+    "lat": 42.8,
+    "lon": -8.8917,
+    "cams": [
+      {
+        "id": "windy-noia-ria",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1706193609",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1706193609/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1706193609/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "o-freixo",
+    "name": "O Freixo",
+    "municipality": "Outes",
+    "province": "A Coruña",
+    "zone": "rias-baixas",
+    "lat": 42.7954,
+    "lon": -8.9451,
+    "cams": [
+      {
+        "id": "windy-outes-freixo",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1623229929",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1623229929/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1623229929/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "castrove",
+    "name": "Miradoiro de Castrove",
+    "municipality": "Poio",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.4584,
+    "lon": -8.7221,
+    "cams": [
+      {
+        "id": "meteogalicia-castrove",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Castrove/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Castrove/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "cabo-silleiro",
+    "name": "Cabo Silleiro",
+    "municipality": "Baiona",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.112,
+    "lon": -8.899,
+    "cams": [
+      {
+        "id": "youtube-cabo-silleiro",
+        "provider": "Cabo Silleiro Live Cam",
+        "page": "https://cabosilleiro.com/en-directo/",
+        "type": "youtube",
+        "url": "-92OGhAlOjE",
+        "channel": "UCMnJ2Dx8NN8gsk_pSQkx_kQ"
+      }
+    ]
   }
 ]

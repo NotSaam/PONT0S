@@ -6,7 +6,7 @@
 
 *Póntos* es «mar abierto» en griego.
 
-- **33 cámaras en 27 puntos de la costa**, todas se ven dentro de la web: fotos de MeteoGalicia y Windy que se renuevan solas, y el directo de Samil, que arranca con un solo clic.
+- **38 cámaras en 32 puntos de la costa**, todas se ven dentro de la web: fotos de MeteoGalicia y Windy que se renuevan solas, y los directos de Samil y Cabo Silleiro, que arrancan con un solo clic.
 - **El tiempo y el mar** de cada sitio: ahora, las próximas 24 horas y los próximos 7 días; olas, mar de fondo, temperatura del agua, UV, salida y puesta de sol y la curva de la marea de hoy.
 - **Datos oficiales**: bandera azul y calidad del agua.
 - Buscador, filtro por zona, ordenar por cercanía y playas guardadas en el navegador.
@@ -44,14 +44,15 @@ Node 22.12 o superior.
 |---|---|---|---|
 | Previsión del tiempo | [Open-Meteo](https://open-meteo.com/) | CC BY 4.0, gratis sin ánimo de lucro | Desde el navegador, sin clave |
 | Olas, mar de fondo, agua, nivel del mar (marea) | [Open-Meteo Marine](https://open-meteo.com/en/docs/marine-weather-api) | CC BY 4.0 | Desde el navegador |
-| Fotos de cámaras | [MeteoGalicia](https://www.meteogalicia.gal/web/observacion/camaras) | Uso libre citando a MeteoGalicia ([aviso legal](https://www.meteogalicia.gal/aviso-legal)) | `<img>` que se renueva cada 5 min |
+| Fotos de cámaras | [MeteoGalicia](https://www.meteogalicia.gal/web/observacion/camaras) | Uso libre con el compromiso de citar a MeteoGalicia (aviso legal de meteogalicia.gal) | `<img>` que se renueva cada 5 min |
 | Fotos de cámaras | [Windy Webcams](https://www.windy.com/webcams) | Imagen enlazada a windy.com ([condiciones](https://api.windy.com/webcams/terms)) | `<img>` que se renueva cada 2,5 min |
 | Directo de Samil | [RiadeVigoCam](https://www.riadevigocam.com/) en YouTube | El canal permite insertarlo | iframe al pulsar |
+| Directo de Cabo Silleiro | [Cabo Silleiro Live Cam](https://cabosilleiro.com/en-directo/) en YouTube | El canal permite insertarlo | iframe al pulsar |
 | Bandera azul 2026 | [Xunta de Galicia, Abert@s](https://abertos.xunta.gal/catalogo/cultura-ocio-deporte/-/dataset/0697/praias-galegas-con-bandeira-azul-2026) | CC BY-SA 4.0 | Al generar los datos |
 | Calidad del agua 2025 | [EEA, Bathing Water Directive](https://www.eea.europa.eu/en/topics/in-depth/bathing-water) (datos de Náyade) | CC BY 4.0 | Al generar los datos |
 | Línea de costa | © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors | ODbL | Al generar los datos |
 
-Solo entran cámaras que se pueden ver dentro de la web con permiso de quien las emite. Hay más en Galicia (Camaramar, Hispacams, SkylineWebcams, G24 de la CRTVG, Surf30, Waira…), pero o sus condiciones no lo permiten o falta pedirlo: ver [`docs/permisos.md`](docs/permisos.md).
+Solo entran cámaras que se pueden ver dentro de la web con permiso de quien las emite. Hay más en Galicia (Camaramar, Hispacams, SkylineWebcams, G24 de la CRTVG, Surf30, Waira, los concellos de Carballo y Valdoviño…), pero o sus condiciones no lo permiten o falta pedirlo: ver [`docs/permisos.md`](docs/permisos.md).
 
 ### Siguiente versión
 

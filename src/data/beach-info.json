@@ -90,5 +90,13 @@
       "name": "PLAYA SANTA MARTA PM1",
       "id": "ES114M003283"
     }
+  },
+  "a-frouxeira": {
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA FROUXEIRA PM1",
+      "id": "ES111M087224"
+    }
   }
 }

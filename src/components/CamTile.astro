@@ -27,6 +27,8 @@ const alt = `${s.camera}: ${b.name}, ${b.municipality}`;
       {
         cam.type === 'image' && cam.url ? (
           <img src={cam.thumb ?? cam.url} alt={alt} loading="lazy" decoding="async" width="640" height="360" data-live={cam.thumb ?? cam.url} data-refresh={cam.refresh ?? 60} referrerpolicy="no-referrer" />
+        ) : cam.thumb ? (
+          <img src={cam.thumb} alt={alt} loading="lazy" decoding="async" width="640" height="360" data-live={cam.thumb} data-refresh={cam.refresh ?? 120} referrerpolicy="no-referrer" />
         ) : cam.type === 'youtube' && cam.url ? (
           <img src={youtubeThumb(cam.url)} alt={alt} loading="lazy" decoding="async" width="480" height="360" referrerpolicy="no-referrer" />
         ) : (

@@ -44,7 +44,13 @@ const captionOf = (c: Beach['cams'][number]) => (c.type === 'image' ? s.camAuto 
             <img src={c.url} alt={alt(c.label)} width="1280" height="720" data-live={c.url} data-refresh={c.refresh ?? 60} referrerpolicy="no-referrer" fetchpriority={i === 0 ? 'high' : 'auto'} loading={i === 0 ? 'eager' : 'lazy'} />
           ) : c.type === 'youtube' || c.type === 'iframe' || c.type === 'hls' ? (
             <div class="facade" data-embed={embedSrc(c)} data-kind={c.type} data-title={alt(c.label)}>
-              {c.type === 'youtube' && c.url ? <img src={youtubeThumb(c.url)} alt="" loading="lazy" referrerpolicy="no-referrer" /> : <ChartCrop lat={b.lat} lon={b.lon} span={150} />}
+              {c.thumb ? (
+                <img src={c.thumb} alt="" loading="lazy" referrerpolicy="no-referrer" />
+              ) : c.type === 'youtube' && c.url ? (
+                <img src={youtubeThumb(c.url)} alt="" loading="lazy" referrerpolicy="no-referrer" />
+              ) : (
+                <ChartCrop lat={b.lat} lon={b.lon} span={150} />
+              )}
               <div class="facade-ui">
                 <button type="button" class="play" data-play>
                   <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" fill="currentColor" /></svg>

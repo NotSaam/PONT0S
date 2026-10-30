@@ -1,0 +1,638 @@
+[
+  {
+    "id": "ria-de-ribadeo",
+    "name": "Ría de Ribadeo",
+    "municipality": "Ribadeo",
+    "province": "Lugo",
+    "zone": "marina",
+    "lat": 43.5412,
+    "lon": -7.03614,
+    "cams": [
+      {
+        "id": "meteogalicia-ribadeo",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Ribadeoporto/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Ribadeoporto/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "burela",
+    "name": "Costa de Burela",
+    "municipality": "Burela",
+    "province": "Lugo",
+    "zone": "marina",
+    "lat": 43.656,
+    "lon": -7.34435,
+    "cams": [
+      {
+        "id": "meteogalicia-burela",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Burela/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Burela/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "covas",
+    "name": "Covas",
+    "municipality": "Viveiro",
+    "province": "Lugo",
+    "zone": "marina",
+    "lat": 43.66078,
+    "lon": -7.56288,
+    "cams": [
+      {
+        "id": "meteogalicia-penedo-do-galo",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Penedodogalo/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Penedodogalo/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "porto-de-carino",
+    "name": "Porto de Cariño",
+    "municipality": "Cariño",
+    "province": "A Coruña",
+    "zone": "ferrolterra",
+    "lat": 43.734,
+    "lon": -7.86335,
+    "cams": [
+      {
+        "id": "meteogalicia-carino",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Carinho/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Carinho/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "punta-candieira",
+    "name": "Punta Candieira",
+    "municipality": "Cedeira",
+    "province": "A Coruña",
+    "zone": "ferrolterra",
+    "lat": 43.7043,
+    "lon": -8.05246,
+    "cams": [
+      {
+        "id": "meteogalicia-punta-candieira",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/PuntaCandieira/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/PuntaCandieira/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "ria-de-ferrol",
+    "name": "Ría de Ferrol",
+    "municipality": "Ferrol",
+    "province": "A Coruña",
+    "zone": "ferrolterra",
+    "lat": 43.48,
+    "lon": -8.24,
+    "cams": [
+      {
+        "id": "windy-ria-de-ferrol",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1683292037",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1683292037/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1683292037/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "redes",
+    "name": "Redes",
+    "municipality": "Ares",
+    "province": "A Coruña",
+    "zone": "ferrolterra",
+    "lat": 43.4433,
+    "lon": -8.2286,
+    "cams": [
+      {
+        "id": "windy-redes",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1344675159",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1344675159/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1344675159/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "orzan-riazor",
+    "name": "Orzán e Riazor",
+    "municipality": "A Coruña",
+    "province": "A Coruña",
+    "zone": "coruna",
+    "lat": 43.3695,
+    "lon": -8.406,
+    "cams": [
+      {
+        "id": "windy-coruna-orzan-mobil",
+        "label": "Orzán e Riazor",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1668786166",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1668786166/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1668786166/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      },
+      {
+        "id": "windy-coruna-orzan-fixa",
+        "label": "Ensenada do Orzán",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1280757387",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1280757387/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1280757387/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "dique-de-abrigo",
+    "name": "Dique de abrigo",
+    "municipality": "A Coruña",
+    "province": "A Coruña",
+    "zone": "coruna",
+    "lat": 43.3651,
+    "lon": -8.37471,
+    "cams": [
+      {
+        "id": "meteogalicia-coruna-dique",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Corunha/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Corunha/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "langosteira-arteixo",
+    "name": "Porto exterior de Langosteira",
+    "municipality": "Arteixo",
+    "province": "A Coruña",
+    "zone": "coruna",
+    "lat": 43.3472,
+    "lon": -8.53118,
+    "cams": [
+      {
+        "id": "meteogalicia-langosteira",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Langosteira/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Langosteira/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "camarinas",
+    "name": "Ría de Camariñas",
+    "municipality": "Camariñas",
+    "province": "A Coruña",
+    "zone": "costa-da-morte",
+    "lat": 43.1245,
+    "lon": -9.17831,
+    "cams": [
+      {
+        "id": "meteogalicia-camarinas",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Camarinhas/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Camarinhas/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "muxia",
+    "name": "Muxía",
+    "municipality": "Muxía",
+    "province": "A Coruña",
+    "zone": "costa-da-morte",
+    "lat": 43.1105,
+    "lon": -9.2185,
+    "cams": [
+      {
+        "id": "windy-muxia",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1793899869",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1793899869/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1793899869/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "cabo-fisterra",
+    "name": "Cabo Fisterra",
+    "municipality": "Fisterra",
+    "province": "A Coruña",
+    "zone": "costa-da-morte",
+    "lat": 42.8826,
+    "lon": -9.2717,
+    "cams": [
+      {
+        "id": "windy-fisterra",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1736469519",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1736469519/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1736469519/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "louro",
+    "name": "Louro e Area Maior",
+    "municipality": "Muros",
+    "province": "A Coruña",
+    "zone": "rias-baixas",
+    "lat": 42.80925,
+    "lon": -9.07708,
+    "cams": [
+      {
+        "id": "meteogalicia-muros-louro",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MedioRural/Muros/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MedioRural/Muros/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "portosin",
+    "name": "Portosín",
+    "municipality": "Porto do Son",
+    "province": "A Coruña",
+    "zone": "rias-baixas",
+    "lat": 42.7656,
+    "lon": -8.94848,
+    "cams": [
+      {
+        "id": "meteogalicia-portosin",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Portosin/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Portosin/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "corrubedo",
+    "name": "Corrubedo",
+    "municipality": "Ribeira",
+    "province": "A Coruña",
+    "zone": "rias-baixas",
+    "lat": 42.5552,
+    "lon": -9.0286,
+    "cams": [
+      {
+        "id": "meteogalicia-corrubedo",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Corrubedo/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Corrubedo/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "coron",
+    "name": "Corón",
+    "municipality": "Vilanova de Arousa",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.5801,
+    "lon": -8.80471,
+    "cams": [
+      {
+        "id": "meteogalicia-coron",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Coron/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Coron/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "o-grove",
+    "name": "Confín, O Grove",
+    "municipality": "O Grove",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.495,
+    "lon": -8.865,
+    "cams": [
+      {
+        "id": "windy-o-grove-porto",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1276008953",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1276008953/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1276008953/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "silgar",
+    "name": "Silgar",
+    "municipality": "Sanxenxo",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.3985,
+    "lon": -8.807,
+    "cams": [
+      {
+        "id": "windy-sanxenxo-silgar",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1276183252",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1276183252/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1276183252/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "baltar",
+    "name": "Baltar, Portonovo",
+    "municipality": "Sanxenxo",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.394,
+    "lon": -8.824,
+    "cams": [
+      {
+        "id": "windy-portonovo-baltar",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1302031812",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1302031812/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1302031812/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "aguete",
+    "name": "Aguete",
+    "municipality": "Marín",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.37594,
+    "lon": -8.72897,
+    "cams": [
+      {
+        "id": "meteogalicia-aguete",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Aguete2/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Aguete2/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "illa-de-ons",
+    "name": "Illa de Ons",
+    "municipality": "Bueu",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.3769,
+    "lon": -8.93221,
+    "cams": [
+      {
+        "id": "meteogalicia-ons-praia",
+        "label": "Praia",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Onsplaya/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Onsplaya/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      },
+      {
+        "id": "meteogalicia-ons-porto",
+        "label": "Porto",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Onspuerto/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Onspuerto/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "cangas",
+    "name": "Porto de Cangas",
+    "municipality": "Cangas",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.26044,
+    "lon": -8.78259,
+    "cams": [
+      {
+        "id": "meteogalicia-cangas",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Cangas/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Cangas/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "illas-cies",
+    "name": "Illas Cíes",
+    "municipality": "Vigo",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.2189,
+    "lon": -8.90402,
+    "cams": [
+      {
+        "id": "meteogalicia-cies-rodas",
+        "label": "Praia de Rodas",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Ciesrodas/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Ciesrodas/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      },
+      {
+        "id": "meteogalicia-cies-faro-norte",
+        "label": "Faro, norte",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/CiesFaroNorte/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/CiesFaroNorte/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      },
+      {
+        "id": "meteogalicia-cies-faro-sur",
+        "label": "Faro, sur",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/CiesFaroSur/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/CiesFaroSur/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      }
+    ]
+  },
+  {
+    "id": "samil",
+    "name": "Samil",
+    "municipality": "Vigo",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.212,
+    "lon": -8.776,
+    "cams": [
+      {
+        "id": "youtube-riadevigocam-samil",
+        "label": "Samil 180°",
+        "provider": "RiadeVigoCam",
+        "page": "https://www.riadevigocam.com/",
+        "type": "youtube",
+        "url": "6wFjIFTyXTg",
+        "channel": "UCEZXGRfU-PYAMkh-yMWCwAA"
+      },
+      {
+        "id": "windy-vigo-samil",
+        "label": "Praia de Samil",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1793910127",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1793910127/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1793910127/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "baiona",
+    "name": "Baiona",
+    "municipality": "Baiona",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 42.1155,
+    "lon": -8.83718,
+    "cams": [
+      {
+        "id": "meteogalicia-baiona",
+        "label": "Santa Marta",
+        "provider": "MeteoGalicia",
+        "page": "https://www.meteogalicia.gal/web/observacion/camaras",
+        "type": "image",
+        "url": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Baiona/ultima.jpg",
+        "thumb": "https://www.meteogalicia.gal/datosred/camaras/MeteoGalicia/Baiona/miniUltima.jpg",
+        "refresh": 300,
+        "credit": "Imaxe: MeteoGalicia, Consellería de Medio Ambiente (Xunta de Galicia)"
+      },
+      {
+        "id": "windy-baiona-parador",
+        "label": "Monterreal",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1664616557",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1664616557/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1664616557/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  },
+  {
+    "id": "a-guarda",
+    "name": "A Guarda",
+    "municipality": "A Guarda",
+    "province": "Pontevedra",
+    "zone": "rias-baixas",
+    "lat": 41.902,
+    "lon": -8.876,
+    "cams": [
+      {
+        "id": "windy-a-guarda-porto",
+        "provider": "Windy.com",
+        "page": "https://www.windy.com/webcams/1793900742",
+        "type": "image",
+        "url": "https://imgproxy.windy.com/_/full/plain/current/1793900742/original.jpg",
+        "thumb": "https://imgproxy.windy.com/_/normal/plain/current/1793900742/original.jpg",
+        "refresh": 150,
+        "credit": "Imagen: Windy.com"
+      }
+    ]
+  }
+]

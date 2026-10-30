@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n';
+const s = t('es');
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+---
+
+<Base lang="es" title="No encontrada" alternate={{ es: '', gl: 'gl/' }}>
+  <section class="wrap nf">
+    <h1 class="hydro">Aquí solo hay mar.</h1>
+    <p class="muted">Esta página no existe o la playa ha cambiado de dirección.</p>
+    <p><a href={base}>{s.back}</a></p>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: 4rem;
+  }
+  h1 {
+    font-size: var(--step-4);
+    margin: 0 0 1rem;
+  }
+</style>

@@ -1,0 +1,236 @@
+---
+// Visor de las cámaras de un lugar. Las fotos (image) se ven y se renuevan solas. Los vídeos (YouTube,
+// reproductor, HLS) arrancan con UN clic dentro de la página, ya en marcha y sin sonido: hasta ese
+// clic no se carga nada de terceros. Nada de lo que se pulsa saca de la web.
+import { t, type Lang } from '../i18n';
+import { youtubeThumb, type Beach } from '../lib/beaches';
+import ChartCrop from './ChartCrop.astro';
+
+interface Props {
+  lang: Lang;
+  beach: Beach;
+}
+
+const { lang, beach: b } = Astro.props;
+const s = t(lang);
+const alt = (label?: string) => `${s.camera}: ${b.name}${label ? `, ${label}` : ''}`;
+const embedSrc = (c: Beach['cams'][number]) =>
+  c.type === 'youtube'
+    ? c.channel
+      ? `https://www.youtube-nocookie.com/embed/live_stream?channel=${c.channel}&autoplay=1&mute=1&playsinline=1`
+      : `https://www.youtube-nocookie.com/embed/${c.url}?autoplay=1&mute=1&playsinline=1&rel=0`
+    : c.url;
+const captionOf = (c: Beach['cams'][number]) => (c.type === 'image' ? s.camAuto : '');
+---
+
+<section class="viewer" aria-label={s.cameras} data-viewer>
+  {
+    b.cams.length > 1 && (
+      <div class="tabs" role="tablist" aria-label={s.cameras}>
+        {b.cams.map((c, i) => (
+          <button type="button" role="tab" id={`tab-${c.id}`} aria-controls={`cam-${c.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            {c.label ?? `${s.camera} ${i + 1}`}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    b.cams.map((c, i) => (
+      <div class="panel" id={`cam-${c.id}`} role={b.cams.length > 1 ? 'tabpanel' : undefined} aria-labelledby={b.cams.length > 1 ? `tab-${c.id}` : undefined} hidden={i !== 0}>
+        <div class="screen">
+          {c.type === 'image' && c.url ? (
+            <img src={c.url} alt={alt(c.label)} width="1280" height="720" data-live={c.url} data-refresh={c.refresh ?? 60} referrerpolicy="no-referrer" fetchpriority={i === 0 ? 'high' : 'auto'} loading={i === 0 ? 'eager' : 'lazy'} />
+          ) : c.type === 'youtube' || c.type === 'iframe' || c.type === 'hls' ? (
+            <div class="facade" data-embed={embedSrc(c)} data-kind={c.type} data-title={alt(c.label)}>
+              {c.type === 'youtube' && c.url ? <img src={youtubeThumb(c.url)} alt="" loading="lazy" referrerpolicy="no-referrer" /> : <ChartCrop lat={b.lat} lon={b.lon} span={150} />}
+              <div class="facade-ui">
+                <button type="button" class="play" data-play>
+                  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" fill="currentColor" /></svg>
+                  {s.loadCamera}
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </div>
+        <p class="caption">
+          <span>{captionOf(c)}</span>
+          <span>
+            {s.source}: <a href={c.page} rel="noopener" target="_blank">{c.provider}</a>
+            {c.credit && <span class="credit"> ({c.credit})</span>}
+          </span>
+        </p>
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  import { startLiveImages } from '../scripts/live-images';
+
+  for (const viewer of document.querySelectorAll<HTMLElement>('[data-viewer]')) {
+    // Pestañas accesibles: flechas izquierda/derecha y foco itinerante.
+    const tabs = [...viewer.querySelectorAll<HTMLButtonElement>('[role="tab"]')];
+    const select = (tab: HTMLButtonElement) => {
+      for (const t of tabs) {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        viewer.querySelector<HTMLElement>(`#${t.getAttribute('aria-controls')}`)!.hidden = !on;
+      }
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (e) => {
+        const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        const next = tabs[(i + d + tabs.length) % tabs.length];
+        select(next);
+        next.focus();
+      });
+    });
+
+    // Vídeos: un clic en cualquier punto de la portada lo pone en marcha aquí mismo.
+    viewer.addEventListener('click', async (e) => {
+      const facade = (e.target as Element).closest<HTMLElement>('[data-embed]');
+      if (!facade) return;
+      const src = facade.dataset.embed!;
+      if (facade.dataset.kind === 'hls') {
+        const video = document.createElement('video');
+        video.controls = true;
+        video.muted = true;
+        video.autoplay = true;
+        video.playsInline = true;
+        video.setAttribute('aria-label', facade.dataset.title ?? '');
+        if (video.canPlayType('application/vnd.apple.mpegurl')) {
+          video.src = src;
+        } else {
+          const { default: Hls } = await import('hls.js');
+          if (Hls.isSupported()) {
+            const hls = new Hls();
+            hls.loadSource(src);
+            hls.attachMedia(video);
+          }
+        }
+        facade.replaceWith(video);
+        return;
+      }
+      const frame = document.createElement('iframe');
+      frame.src = src;
+      frame.title = facade.dataset.title ?? '';
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = 'strict-origin-when-cross-origin';
+      frame.loading = 'eager';
+      facade.replaceWith(frame);
+      frame.focus();
+    });
+
+    startLiveImages(viewer);
+  }
+</script>
+
+<style>
+  .viewer {
+    min-width: 0;
+  }
+  .tabs {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    margin-bottom: 0.5rem;
+    scrollbar-width: none;
+  }
+  .tabs button {
+    flex: none;
+    min-height: 40px;
+    padding: 0 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: none;
+    color: var(--ink-2);
+  }
+  .tabs button[aria-selected='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .screen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--paper-2);
+  }
+  .screen > :global(img),
+  .screen > :global(iframe),
+  .screen > :global(video) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+    background: #000;
+  }
+  .screen > img {
+    background: var(--shoal);
+    object-fit: contain;
+  }
+  .screen > img:global(.is-stale) {
+    opacity: 0.55;
+  }
+  .facade {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+  .facade > :global(img),
+  .facade > :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .facade-ui {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    background: linear-gradient(to top, color-mix(in srgb, var(--paper) 92%, transparent), transparent);
+  }
+  .play {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.1rem;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .play:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .note {
+    margin: 0;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    max-width: 38ch;
+  }
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+    margin: 0.5rem 0 0;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+  }
+</style>

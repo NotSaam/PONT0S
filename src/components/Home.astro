@@ -1,0 +1,300 @@
+---
+import Base from '../layouts/Base.astro';
+import CoastMap from './CoastMap.astro';
+import CamTile from './CamTile.astro';
+import { t, ZONES, type Lang } from '../i18n';
+import { beaches, cameraCount } from '../lib/beaches';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+const counts = Object.fromEntries(ZONES.map((z) => [z, beaches.filter((b) => b.zone === z).length]));
+const strings = {
+  noResults: s.noResults('§'),
+  nearMeActive: s.nearMeActive,
+  nearMeDenied: s.nearMeDenied,
+  dirs: s.dirs,
+  wmo: s.wmo,
+  updatedAt: s.updatedAt('§'),
+  dataError: s.dataError,
+  save: s.save,
+  saved: s.saved,
+  warmest: lang === 'gl' ? 'Auga máis temperada' : 'Agua más templada',
+  biggest: lang === 'gl' ? 'Ondas máis altas' : 'Olas más altas',
+  calmest: lang === 'gl' ? 'Menos vento' : 'Menos viento',
+  kmAway: lang === 'gl' ? 'a § km' : 'a § km',
+};
+---
+
+<Base lang={lang} alternate={{ es: '', gl: 'gl/' }}>
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-text">
+      <h1 id="hero-title" class="hydro">{s.heroTitle}</h1>
+      <p class="lead">{s.heroLead(cameraCount, beaches.length)}</p>
+
+      <form class="finder" role="search" data-finder onsubmit="return false">
+        <label for="q" class="finder-label">{s.searchLabel}</label>
+        <div class="finder-row">
+          <input id="q" name="q" type="search" autocomplete="off" spellcheck="false" placeholder={s.searchPlaceholder} data-q />
+          <button type="button" class="near" data-near aria-pressed="false">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <circle cx="12" cy="12" r="3"></circle><path d="M12 2.5v3.5M12 18v3.5M2.5 12H6M18 12h3.5"></path><circle cx="12" cy="12" r="7.5"></circle>
+            </svg>
+            <span>{s.nearMe}</span>
+          </button>
+        </div>
+        <p class="finder-status muted" role="status" aria-live="polite" data-status></p>
+      </form>
+
+      <div class="summary" data-summary hidden>
+        <h2 class="summary-h">{s.now}</h2>
+        <dl class="summary-list" data-summary-list></dl>
+        <p class="summary-time muted" data-summary-time></p>
+      </div>
+    </div>
+
+    <div class="hero-map">
+      <CoastMap lang={lang} beaches={beaches} />
+      <p class="map-hint muted">{s.mapHint}</p>
+    </div>
+  </section>
+
+  <section class="cams wrap" aria-labelledby="cams-title" id="camaras">
+    <h2 id="cams-title" class="cams-title">{s.liveTitle}</h2>
+    <div class="zones-bar">
+      <div class="zones" role="toolbar" aria-label={s.cameras} data-zones>
+        <button type="button" aria-pressed="true" data-zone="all">{s.allCoast}</button>
+        {
+          ZONES.filter((z) => counts[z] > 0).map((z) => (
+            <button type="button" aria-pressed="false" data-zone={z}>
+              {s.zones[z]}
+            </button>
+          ))
+        }
+        <button type="button" aria-pressed="false" data-zone="saved" hidden data-saved-filter>{s.favorites}</button>
+      </div>
+    </div>
+
+    <ul class="grid" data-grid>
+      {beaches.map((b) => <CamTile lang={lang} beach={b} />)}
+    </ul>
+
+    <div class="empty" data-empty hidden>
+      <p data-empty-text></p>
+      <button type="button" class="link-btn" data-clear>{s.clearSearch}</button>
+    </div>
+  </section>
+
+  <script type="application/json" id="home-strings" set:html={JSON.stringify(strings)} />
+</Base>
+
+<script>
+  import { initHome } from '../scripts/home';
+  initHome();
+</script>
+
+<style>
+  .hero {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(2rem, 4vw, 3rem);
+    align-items: start;
+  }
+  @media (min-width: 60rem) {
+    .hero {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      align-items: center;
+    }
+  }
+  h1 {
+    font-size: var(--step-5);
+    line-height: 0.98;
+    margin: 0 0 1.25rem;
+    letter-spacing: -0.02em;
+    max-width: 11ch;
+  }
+  .lead {
+    font-size: var(--step-1);
+    line-height: 1.4;
+    max-width: 34ch;
+    margin: 0 0 2rem;
+    color: var(--ink-2);
+  }
+  .finder {
+    max-width: 34rem;
+  }
+  .finder-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  .finder-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  input[type='search'] {
+    flex: 1 1 14rem;
+    min-height: 48px;
+    padding: 0 0.9rem;
+    border: 1px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--paper);
+    font-size: max(16px, var(--step-0));
+  }
+  input[type='search']::placeholder {
+    color: var(--ink-3);
+  }
+  .near {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--paper-2);
+  }
+  .near:hover {
+    border-color: var(--ink);
+  }
+  .near[aria-pressed='true'] {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .finder-status {
+    min-height: 1.5em;
+    margin: 0.5rem 0 0;
+    font-size: var(--step--1);
+  }
+  .summary {
+    margin-top: 2rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    max-width: 34rem;
+  }
+  .summary-h {
+    font-size: var(--step-0);
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .summary-list {
+    margin: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .summary-list :global(div) {
+    display: grid;
+    grid-template-columns: 11.5rem 1fr;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+  @media (max-width: 30rem) {
+    .summary-list :global(div) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+    }
+  }
+  .summary-list :global(dt) {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+  }
+  .summary-list :global(dd) {
+    margin: 0;
+  }
+  .summary-list :global(dd a) {
+    font-family: var(--serif);
+    font-style: italic;
+  }
+  .summary-list :global(.v) {
+    font-weight: 600;
+    margin-right: 0.35rem;
+  }
+  .summary-time {
+    font-size: var(--step--1);
+    margin: 0.75rem 0 0;
+  }
+  .hero-map {
+    max-width: 40rem;
+    width: 100%;
+    justify-self: center;
+  }
+  .map-hint {
+    font-size: var(--step--1);
+    margin: 0.5rem 0 0;
+  }
+
+  .cams-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--step-3);
+    margin: 0;
+    border-top: 1px solid var(--ink);
+    padding-top: 1rem;
+  }
+  .zones-bar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: var(--paper);
+    padding-block: 0.6rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .zones {
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100%;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+  @media (min-width: 48rem) {
+    .zones {
+      margin-inline: 0;
+      padding-inline: 0;
+      flex-wrap: wrap;
+    }
+  }
+  .zones button {
+    flex: none;
+    min-height: 40px;
+    padding: 0 0.85rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: none;
+    color: var(--ink-2);
+  }
+  .zones button:hover {
+    color: var(--ink);
+    border-color: var(--rule);
+  }
+  .zones button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2.25rem 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  }
+  .empty {
+    padding: 3rem 0;
+    text-align: center;
+  }
+  .link-btn {
+    border: 0;
+    background: none;
+    color: var(--accent);
+    text-decoration: underline;
+    min-height: 44px;
+  }
+</style>

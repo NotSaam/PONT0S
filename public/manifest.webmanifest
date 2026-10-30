@@ -1,0 +1,11 @@
+{
+  "name": "PONT0S · cámaras de la costa gallega",
+  "short_name": "PONT0S",
+  "description": "Cámaras en directo de las playas de Galicia, con el tiempo y el mar de cada una.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0e0f12",
+  "theme_color": "#0e0f12",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

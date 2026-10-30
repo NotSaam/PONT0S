@@ -1,0 +1,12 @@
+---
+import BeachPage from '../../components/BeachPage.astro';
+import { beaches, type Beach } from '../../lib/beaches';
+
+export function getStaticPaths() {
+  return beaches.map((beach) => ({ params: { id: beach.id }, props: { beach } }));
+}
+
+const { beach } = Astro.props as { beach: Beach };
+---
+
+<BeachPage lang="es" beach={beach} />

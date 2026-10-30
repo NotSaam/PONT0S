@@ -1,0 +1,228 @@
+---
+// La costa de Galicia dibujada como una carta náutica: agua profunda en blanco, bandas de sonda
+// alrededor de la costa, tierra en ante, marco con la escala de latitud y longitud y cada cámara
+// marcada como una luz en la costa, con el acento de PONT0S.
+import { BBOX, VIEW, project } from '../lib/projection.mjs';
+import { t, beachPath, type Lang } from '../i18n';
+import type { Beach } from '../lib/beaches';
+
+interface Props {
+  lang: Lang;
+  beaches: Beach[];
+}
+
+const { lang, beaches } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const W = VIEW.width;
+const H = VIEW.height;
+
+const sprite = `${base}coast.svg#coast`;
+
+// Marco de carta: bandas alternas cada 10' de arco en los cuatro lados.
+const ticks: { x: number; y: number; w: number; h: number; on: boolean }[] = [];
+const band = 9;
+const step = 10 / 60;
+let on = true;
+for (let lat = Math.ceil(BBOX.south / step) * step; lat < BBOX.north; lat += step) {
+  const [, y1] = project(BBOX.west, lat);
+  const [, y0] = project(BBOX.west, Math.min(lat + step, BBOX.north));
+  ticks.push({ x: 0, y: y0, w: band, h: y1 - y0, on }, { x: W - band, y: y0, w: band, h: y1 - y0, on });
+  on = !on;
+}
+on = true;
+for (let lon = Math.ceil(BBOX.west / step) * step; lon < BBOX.east; lon += step) {
+  const [x0] = project(lon, BBOX.north);
+  const [x1] = project(Math.min(lon + step, BBOX.east), BBOX.north);
+  ticks.push({ x: x0, y: 0, w: x1 - x0, h: band, on }, { x: x0, y: H - band, w: x1 - x0, h: band, on });
+  on = !on;
+}
+const degLabels = [
+  ...[42, 43, 44].filter((v) => v > BBOX.south && v < BBOX.north).map((lat) => ({ lat, y: project(BBOX.west, lat)[1] })),
+];
+const lonLabels = [-9, -8, -7].filter((v) => v > BBOX.west && v < BBOX.east).map((lon) => ({ lon, x: project(lon, BBOX.south)[0] }));
+
+const sea = (lon: number, lat: number) => project(lon, lat);
+const [atlX, atlY] = sea(-9.47, 42.45);
+const [canX, canY] = sea(-7.75, 43.93);
+
+const zoneLabels = [
+  { key: 'marina', at: sea(-7.45, 43.78) },
+  { key: 'ferrolterra', at: sea(-8.12, 43.77) },
+  { key: 'coruna', at: sea(-8.6, 43.47) },
+  { key: 'costa-da-morte', at: sea(-9.33, 43.36) },
+  { key: 'rias-baixas', at: sea(-9.12, 42.27) },
+] as const;
+
+const marks = beaches.map((b) => {
+  const [x, y] = project(b.lon, b.lat);
+  return { b, x, y };
+});
+---
+
+<figure class="chart" data-coast-map>
+  <svg viewBox={`0 0 ${W} ${H}`} role="group" aria-label={s.map}>
+    <defs>
+      <clipPath id="chart-clip"><rect x="0" y="0" width={W} height={H}></rect></clipPath>
+    </defs>
+    <g clip-path="url(#chart-clip)">
+      <rect class="deep" x="0" y="0" width={W} height={H}></rect>
+      {/* Bandas de sonda: trazos anchos de la costa que la tierra tapa por dentro. */}
+      <g class="soundings" fill="none" stroke-linejoin="round">
+        <use href={sprite} class="b3"></use>
+        <use href={sprite} class="b3c"></use>
+        <use href={sprite} class="b2"></use>
+        <use href={sprite} class="b1"></use>
+      </g>
+      <use href={sprite} class="land"></use>
+
+      <text class="sea-name" x={atlX} y={atlY} transform={`rotate(-90 ${atlX} ${atlY})`} text-anchor="middle">
+        Océano Atlántico
+      </text>
+      <text class="sea-name" x={canX} y={canY} text-anchor="middle">
+        Mar Cantábrico
+      </text>
+      {
+        zoneLabels.map((z) => (
+          <text class="zone-name" x={z.at[0]} y={z.at[1]} text-anchor="middle">
+            {s.zones[z.key]}
+          </text>
+        ))
+      }
+
+      <g class="lights">
+        {
+          marks.map(({ b, x, y }) => (
+            <a href={`${base}${beachPath(lang, b.id)}`} class="light" data-beach={b.id} data-zone={b.zone} aria-label={`${b.name}, ${b.municipality}`}>
+              <title>{`${b.name} · ${b.municipality}`}</title>
+              <g transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(1.6)`}>
+                <circle class="hit" r="16"></circle>
+                <path class="flare" d="M0 0C2.6-3.4 4.2-8.6 1.6-13.2C.8-14.5-.8-14.5-1.6-13.2C-4.2-8.6-2.6-3.4 0 0Z"></path>
+                <circle class="dot" r="2.6"></circle>
+              </g>
+            </a>
+          ))
+        }
+      </g>
+    </g>
+
+    <g class="neat">
+      <rect x="0.5" y="0.5" width={W - 1} height={H - 1} fill="none"></rect>
+      <rect x={band} y={band} width={W - band * 2} height={H - band * 2} fill="none"></rect>
+      {ticks.filter((k) => k.on).map((k) => <rect class="tick" x={k.x} y={k.y} width={k.w} height={k.h}></rect>)}
+    </g>
+    {
+      degLabels.map((l) => (
+        <text class="deg" x={band + 6} y={l.y - 5}>
+          {`${l.lat}°N`}
+        </text>
+      ))
+    }
+    {
+      lonLabels.map((l) => (
+        <text class="deg" x={l.x + 5} y={H - band - 7}>
+          {`${Math.abs(l.lon)}°O`}
+        </text>
+      ))
+    }
+  </svg>
+  <figcaption class="sr-only">{s.mapHint}</figcaption>
+</figure>
+
+<style>
+  .chart {
+    margin: 0;
+    color: var(--ink);
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .deep {
+    fill: var(--paper);
+  }
+  .soundings .b3 {
+    stroke: var(--contour);
+    stroke-width: 46;
+  }
+  .soundings .b3c {
+    stroke: var(--paper);
+    stroke-width: 44;
+  }
+  .soundings .b2 {
+    stroke: var(--shoal);
+    stroke-width: 26;
+  }
+  .soundings .b1 {
+    stroke: var(--shoal-2);
+    stroke-width: 9;
+  }
+  .land {
+    fill: var(--land);
+    stroke: var(--coastline);
+    stroke-width: 0.9;
+    stroke-linejoin: round;
+  }
+  .sea-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 30px;
+    letter-spacing: 0.32em;
+    fill: var(--ink-2);
+  }
+  .zone-name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 21px;
+    fill: var(--ink);
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+  .light .hit {
+    fill: transparent;
+  }
+  .light .flare {
+    fill: var(--accent);
+    opacity: 0.88;
+    transform: rotate(45deg);
+    transition: transform 160ms ease-out;
+    transform-origin: 0 0;
+  }
+  .light .dot {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.2;
+  }
+  .light:hover .flare,
+  .light:focus-visible .flare,
+  .light.is-on .flare {
+    opacity: 1;
+    transform: rotate(45deg) scale(1.45);
+  }
+  .light:focus-visible {
+    outline: none;
+  }
+  .light:focus-visible .dot {
+    stroke: var(--accent);
+    stroke-width: 3;
+  }
+  .light.is-dim {
+    opacity: 0.25;
+  }
+  .neat rect {
+    stroke: var(--ink);
+    stroke-width: 1;
+  }
+  .neat .tick {
+    fill: var(--ink);
+    stroke: none;
+  }
+  .deg {
+    font-family: var(--sans);
+    font-size: 15px;
+    fill: var(--ink-2);
+  }
+</style>

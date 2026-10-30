@@ -1,0 +1,66 @@
+---
+// Recorte de la carta alrededor de una playa: lo que se ve cuando la cámara no se puede incrustar.
+import { project } from '../lib/projection.mjs';
+
+interface Props {
+  lat: number;
+  lon: number;
+  /** Ancho del recorte en unidades del mapa (~7 por km). */
+  span?: number;
+}
+
+const { lat, lon, span = 110 } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const sprite = `${base}coast.svg#coast`;
+const [x, y] = project(lon, lat);
+const w = span;
+const h = (span * 9) / 16;
+---
+
+<svg class="crop" viewBox={`${(x - w / 2).toFixed(1)} ${(y - h / 2).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <rect x={x - w} y={y - h} width={w * 2} height={h * 2} class="sea"></rect>
+  <use href={sprite} class="b2"></use>
+  <use href={sprite} class="b1"></use>
+  <use href={sprite} class="land"></use>
+  <g transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(0.55)`}>
+    <path class="flare" d="M0 0C2.6-3.4 4.2-8.6 1.6-13.2C.8-14.5-.8-14.5-1.6-13.2C-4.2-8.6-2.6-3.4 0 0Z" transform="rotate(45)"></path>
+    <circle class="dot" r="2.6"></circle>
+  </g>
+</svg>
+
+<style>
+  .crop {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .sea {
+    fill: var(--paper);
+  }
+  .b2 {
+    fill: none;
+    stroke: var(--shoal);
+    stroke-width: 9;
+    stroke-linejoin: round;
+  }
+  .b1 {
+    fill: none;
+    stroke: var(--shoal-2);
+    stroke-width: 3.5;
+    stroke-linejoin: round;
+  }
+  .land {
+    fill: var(--land);
+    stroke: var(--coastline);
+    stroke-width: 0.35;
+    stroke-linejoin: round;
+  }
+  .flare {
+    fill: var(--accent);
+  }
+  .dot {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.2;
+  }
+</style>

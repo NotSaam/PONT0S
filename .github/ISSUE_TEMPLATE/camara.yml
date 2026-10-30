@@ -1,0 +1,35 @@
+name: Proponer una cámara
+description: Una cámara de una playa gallega que falta o que ha dejado de funcionar.
+title: 'Cámara: '
+labels: [camara]
+body:
+  - type: input
+    id: playa
+    attributes:
+      label: Playa y concello
+      placeholder: Praia de Area Maior, Muros
+    validations:
+      required: true
+  - type: input
+    id: pagina
+    attributes:
+      label: Página de la cámara
+      description: La web donde la publica quien la emite (concello, hotel, escuela de surf…).
+      placeholder: https://
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Qué ofrece la página
+      options:
+        - Una foto que se actualiza (JPG)
+        - Un vídeo en directo con código para insertar
+        - Un directo de YouTube
+        - Solo se puede ver en su web
+        - No lo sé
+  - type: textarea
+    id: permiso
+    attributes:
+      label: ¿Permite insertarla en otras webs?
+      description: Si la página ofrece un código para insertar o dice algo sobre su uso, pégalo aquí.

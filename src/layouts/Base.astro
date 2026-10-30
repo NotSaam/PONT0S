@@ -1,0 +1,171 @@
+---
+import '@fontsource-variable/source-serif-4/wght-italic.css';
+import '@fontsource-variable/atkinson-hyperlegible-next';
+import '../styles/global.css';
+import { t, homePath, type Lang } from '../i18n';
+import { REPO_URL } from '../config';
+import Wordmark from '../components/Wordmark.astro';
+
+interface Props {
+  lang: Lang;
+  title?: string;
+  description?: string;
+  /** Ruta de la misma página en el otro idioma (sin base). */
+  alternate: Record<Lang, string>;
+}
+
+const { lang, title, description, alternate } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const href = (p: string) => `${base}${p}`;
+const fullTitle = title ? `${title} · ${s.siteName}` : `${s.siteName} · ${s.heroTitle}`;
+const desc = description ?? s.tagline;
+const other: Lang = lang === 'es' ? 'gl' : 'es';
+const canonical = new URL(href(alternate[lang]), Astro.site).toString();
+const repo = REPO_URL;
+---
+
+<!doctype html>
+<html lang={s.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={new URL(href(alternate.es), Astro.site).toString()} />
+    <link rel="alternate" hreflang="gl" href={new URL(href(alternate.gl), Astro.site).toString()} />
+    <link rel="icon" href={href('favicon.svg')} type="image/svg+xml" />
+    <link rel="manifest" href={href('manifest.webmanifest')} />
+    <meta name="theme-color" content="#0e0f12" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="preconnect" href="https://api.open-meteo.com" crossorigin />
+    <link rel="preconnect" href="https://marine-api.open-meteo.com" crossorigin />
+  </head>
+  <body>
+    <a class="skip" href="#contenido">{s.skip}</a>
+    <header class="top">
+      <div class="wrap top-row">
+        <a class="brand" href={href(homePath(lang))} aria-label={`${s.siteName}, ${s.homeLabel}`}><Wordmark /></a>
+        <nav class="top-nav" aria-label={s.siteName}>
+          <a class="lang" href={href(alternate[other])} hreflang={other} lang={other}>{t(other).langName}</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-grid">
+        <div>
+          <p class="foot-brand"><Wordmark /><span class="sr-only">PONT0S</span></p>
+          <p class="muted foot-lead">{s.footerLead}</p>
+          <p class="foot-links">
+            <a href={repo}>{s.repo}</a>
+            <a href={`${repo}/issues/new?template=camara.yml`}>{s.addCam}</a>
+          </p>
+        </div>
+        <div>
+          <h2 class="foot-h">{s.sources}</h2>
+          <ul class="foot-sources muted">
+            <li><a href="https://open-meteo.com/">Open-Meteo</a>: {s.srcWeather} (CC BY 4.0)</li>
+            <li><a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>: {s.srcCoast} (ODbL)</li>
+            <li>{s.srcCams}</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<style>
+  .top {
+    border-bottom: 1px solid var(--rule);
+  }
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 3.5rem;
+    gap: 1rem;
+  }
+  .brand {
+    font-size: 1.15rem;
+    text-decoration: none;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .top-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+    padding: 0 0.6rem;
+    border: 0;
+    background: none;
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    text-decoration: none;
+    border-radius: var(--radius);
+  }
+  .lang:hover {
+    color: var(--accent);
+  }
+  .foot {
+    margin-top: clamp(3rem, 6vw, 6rem);
+    border-top: 1px solid var(--rule);
+    padding-block: 2.5rem 3rem;
+    font-size: var(--step--1);
+  }
+  .foot-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 48rem) {
+    .foot-grid {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    }
+  }
+  .foot-brand {
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem;
+  }
+  .foot-lead {
+    max-width: 52ch;
+    margin: 0 0 1rem;
+  }
+  .foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+  }
+  .foot-h {
+    font-size: var(--step-0);
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+  .foot-sources {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+</style>

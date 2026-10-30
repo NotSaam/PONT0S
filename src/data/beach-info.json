@@ -1,0 +1,94 @@
+{
+  "orzan-riazor": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Orzán-Matadero"
+    },
+    "lengthM": 600,
+    "sand": "Grosa",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA RIAZOR PM3",
+      "id": "ES111M0302137"
+    }
+  },
+  "silgar": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Silgar"
+    },
+    "lengthM": 600,
+    "sand": "Fina",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA SILGAR PM3",
+      "id": "ES114M051388"
+    }
+  },
+  "baltar": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Baltar"
+    },
+    "lengthM": 600,
+    "sand": "Fina",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA BALTAR PM1",
+      "id": "ES114M051402"
+    }
+  },
+  "aguete": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Aguete"
+    },
+    "lengthM": 920,
+    "sand": "Fina",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA AGUETE PM1",
+      "id": "ES114M026347"
+    }
+  },
+  "illas-cies": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Rodas (Illas Cíes)"
+    },
+    "lengthM": 1300,
+    "sand": "Fina",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA RODAS (ISLAS CIES) PM1",
+      "id": "ES114M057418"
+    }
+  },
+  "samil": {
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA SAMIL PM3",
+      "id": "ES114M057411"
+    }
+  },
+  "baiona": {
+    "blueFlag": {
+      "year": 2026,
+      "name": "Santa Marta"
+    },
+    "lengthM": 250,
+    "sand": "Fina",
+    "water": {
+      "season": 2025,
+      "quality": "excellent",
+      "name": "PLAYA SANTA MARTA PM1",
+      "id": "ES114M003283"
+    }
+  }
+}

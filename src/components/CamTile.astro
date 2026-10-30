@@ -1,0 +1,176 @@
+---
+import { t, beachPath, type Lang } from '../i18n';
+import { previewCam, youtubeThumb, type Beach } from '../lib/beaches';
+import { fold } from '../lib/format';
+import ChartCrop from './ChartCrop.astro';
+
+interface Props {
+  lang: Lang;
+  beach: Beach;
+  /** Como encabezado de qué nivel va el nombre (h3 en la portada). */
+  level?: 'h3' | 'h4';
+}
+
+const { lang, beach: b, level = 'h3' } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const cam = previewCam(b);
+const href = `${base}${beachPath(lang, b.id)}`;
+const Heading = level;
+const search = fold(`${b.name} ${b.municipality} ${s.zones[b.zone]}`);
+const alt = `${s.camera}: ${b.name}, ${b.municipality}`;
+---
+
+<li class="tile" data-tile data-id={b.id} data-zone={b.zone} data-lat={b.lat} data-lon={b.lon} data-search={search}>
+  <a class="tile-link" href={href}>
+    <div class="frame">
+      {
+        cam.type === 'image' && cam.url ? (
+          <img src={cam.thumb ?? cam.url} alt={alt} loading="lazy" decoding="async" width="640" height="360" data-live={cam.thumb ?? cam.url} data-refresh={cam.refresh ?? 60} referrerpolicy="no-referrer" />
+        ) : cam.type === 'youtube' && cam.url ? (
+          <img src={youtubeThumb(cam.url)} alt={alt} loading="lazy" decoding="async" width="480" height="360" referrerpolicy="no-referrer" />
+        ) : (
+          <ChartCrop lat={b.lat} lon={b.lon} />
+        )
+      }
+      <span class="kind">
+        {b.cams.length > 1 ? `${cam.provider}, ${s.camsCount(b.cams.length)}` : cam.provider}
+      </span>
+    </div>
+    <Heading class="name hydro">{b.name}</Heading>
+    <p class="where">
+      {b.municipality}
+      <span class="dist" data-dist></span>
+    </p>
+  </a>
+  <button type="button" class="fav" aria-pressed="false" aria-label={`${s.save}: ${b.name}`} data-fav={b.id}>
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z" fill="var(--fav-fill, none)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+    </svg>
+  </button>
+  <ul class="cond" data-cond aria-live="off">
+    <li class="c-sky" data-k="sky"><span class="ph"></span></li>
+    <li data-k="air"><span class="ph"></span></li>
+    <li data-k="water"><span class="ph"></span></li>
+    <li data-k="wind"><span class="ph"></span></li>
+    <li data-k="wave"><span class="ph"></span></li>
+  </ul>
+</li>
+
+<style>
+  .tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .tile[hidden] {
+    display: none;
+  }
+  .tile-link {
+    text-decoration: none;
+    display: block;
+  }
+  .frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--paper-2);
+    border-radius: var(--radius);
+  }
+  .frame :global(img),
+  .frame :global(svg) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .frame img {
+    transition: opacity 300ms ease;
+  }
+  .frame img.is-stale {
+    opacity: 0.55;
+  }
+  .kind {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+    max-width: calc(100% - 1rem);
+    padding: 0.15rem 0.5rem;
+    font-size: var(--step--1);
+    background: var(--paper);
+    color: var(--ink-2);
+    border-radius: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .name {
+    font-size: var(--step-2);
+    line-height: 1.1;
+    margin: 0.7rem 0 0.1rem;
+  }
+  .tile-link:hover .name {
+    color: var(--accent);
+  }
+  .where {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: var(--step--1);
+  }
+  .dist:not(:empty)::before {
+    content: ' — ';
+  }
+  .fav {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    color: var(--ink);
+  }
+  .fav[aria-pressed='true'] {
+    color: var(--accent);
+    --fav-fill: var(--accent);
+  }
+  .cond {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0.55rem 0 0;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    font-size: var(--step--1);
+    color: var(--ink);
+    min-height: 2.4rem;
+  }
+  .cond li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+  .cond :global(.lbl) {
+    color: var(--ink-2);
+  }
+  .cond :global(.ico) {
+    flex: none;
+  }
+  .ph {
+    display: inline-block;
+    width: 2.6rem;
+    height: 0.8rem;
+    border-radius: 2px;
+    background: var(--paper-2);
+  }
+  .c-sky .ph {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 999px;
+  }
+</style>

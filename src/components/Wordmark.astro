@@ -1,0 +1,19 @@
+---
+// Nombre del proyecto con el formato de la marca: mayúsculas, espaciado ancho y el «0» en el acento.
+// El lector de pantalla lee «PONT0S» de una vez (la etiqueta va en el enlace que lo envuelve).
+---
+
+<span class="wordmark" aria-hidden="true">PONT<span class="zero">0</span>S</span>
+
+<style>
+  .wordmark {
+    font-family: var(--sans);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .zero {
+    color: var(--accent);
+  }
+</style>

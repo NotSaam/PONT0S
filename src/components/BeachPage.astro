@@ -1,0 +1,465 @@
+---
+import Base from '../layouts/Base.astro';
+import CamViewer from './CamViewer.astro';
+import CamTile from './CamTile.astro';
+import { t, beachPath, homePath, type Lang } from '../i18n';
+import { beaches, type Beach } from '../lib/beaches';
+import { distanceKm } from '../lib/format';
+
+interface Props {
+  lang: Lang;
+  beach: Beach;
+}
+
+const { lang, beach: b } = Astro.props;
+const s = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const home = `${base}${homePath(lang)}`;
+const nearby = beaches
+  .filter((x) => x.id !== b.id)
+  .map((x) => ({ x, d: distanceKm(b.lat, b.lon, x.lat, x.lon) }))
+  .sort((p, q) => p.d - q.d)
+  .slice(0, 3)
+  .map((p) => p.x);
+
+const strings = {
+  dirs: s.dirs,
+  wmo: s.wmo,
+  weekday: s.weekdayShort,
+  today: s.today,
+  highTide: s.highTide,
+  lowTide: s.lowTide,
+  feels: s.feels,
+  gusts: s.gusts,
+  period: s.period,
+  dataError: s.dataError,
+  updatedAt: s.updatedAt('§'),
+  rows: {
+    hour: lang === 'gl' ? 'Hora' : 'Hora',
+    sky: lang === 'gl' ? 'Ceo' : 'Cielo',
+    temp: lang === 'gl' ? 'Temperatura' : 'Temperatura',
+    rain: lang === 'gl' ? 'Chuvia' : 'Lluvia',
+    wind: lang === 'gl' ? 'Vento (km/h)' : 'Viento (km/h)',
+    wave: lang === 'gl' ? 'Ondas (m)' : 'Olas (m)',
+    uv: 'UV',
+  },
+  now: s.now,
+  noTide: lang === 'gl' ? 'Sen datos de marea para este punto.' : 'Sin datos de marea para este punto.',
+};
+
+// «PLAYA RIAZOR PM3» → «Riazor». Los nombres de la EEA traen «?» donde había eñes o tildes: entonces, null.
+function prettyWater(name: string) {
+  const clean = name
+    .replace(/^PLAYA\s+/i, '')
+    .replace(/\s+PM\d+$/i, '')
+    .toLowerCase()
+    .replace(/(^|[\s(\-])([a-záéíóúñ])/g, (_, p, c) => p + c.toUpperCase());
+  return clean.includes('?') ? null : clean;
+}
+
+const description =
+  lang === 'gl'
+    ? `Cámara en directo de ${b.name} (${b.municipality}), co tempo, o vento, as ondas, a marea e a temperatura da auga.`
+    : `Cámara en directo de ${b.name} (${b.municipality}), con el tiempo, el viento, las olas, la marea y la temperatura del agua.`;
+---
+
+<Base lang={lang} title={b.name} description={description} alternate={{ es: beachPath('es', b.id), gl: beachPath('gl', b.id) }}>
+  <div class="wrap page" data-beach-page data-lat={b.lat} data-lon={b.lon} data-id={b.id}>
+    <nav class="crumbs" aria-label={lang === 'gl' ? 'Migas' : 'Migas de pan'}>
+      <a href={home}>{s.back}</a>
+      <span aria-hidden="true">/</span>
+      <a href={`${home}?zona=${b.zone}#camaras`}>{s.zones[b.zone]}</a>
+    </nav>
+
+    <header class="head">
+      <div>
+        <h1 class="hydro">{b.name}</h1>
+        <p class="muted where">{b.municipality}, {s.provinces[b.province] ?? b.province}</p>
+      </div>
+      <button type="button" class="save" aria-pressed="false" data-fav={b.id}>
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path d="M12 3.2l2.6 5.6 6.1.7-4.5 4.2 1.2 6-5.4-3-5.4 3 1.2-6-4.5-4.2 6.1-.7z" fill="var(--fav-fill, none)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+        </svg>
+        <span data-fav-label data-off={s.save} data-on={s.saved}>{s.save}</span>
+      </button>
+    </header>
+
+    <div class="top">
+      <CamViewer lang={lang} beach={b} />
+
+      <section class="now" aria-labelledby="now-h">
+        <h2 id="now-h" class="h2">{s.now}</h2>
+        <div class="now-main">
+          <span class="now-ico" data-now-ico></span>
+          <span class="now-temp" data-now-temp>—</span>
+          <span class="now-sky" data-now-sky></span>
+        </div>
+        <p class="now-feels muted" data-now-feels></p>
+        <dl class="facts">
+          <div><dt>{s.wind}</dt><dd data-now-wind>—</dd></div>
+          <div><dt>{s.waves}</dt><dd data-now-wave>—</dd></div>
+          <div><dt>{s.swell}</dt><dd data-now-swell>—</dd></div>
+          <div><dt>{s.water}</dt><dd data-now-water>—</dd></div>
+          <div><dt>{s.uv}</dt><dd data-now-uv>—</dd></div>
+          <div><dt>{s.sunrise}</dt><dd data-now-sunrise>—</dd></div>
+          <div><dt>{s.sunset}</dt><dd data-now-sunset>—</dd></div>
+        </dl>
+        <p class="stamp muted" data-now-time role="status" aria-live="polite">{s.loading}</p>
+      </section>
+    </div>
+
+    <section class="block" aria-labelledby="tide-h">
+      <h2 id="tide-h" class="h2">{s.tideToday}</h2>
+      <div class="tide" data-tide></div>
+      <p class="fine muted">{s.tideNote}</p>
+    </section>
+
+    <section class="block" aria-labelledby="hours-h">
+      <h2 id="hours-h" class="h2">{s.nextHours}</h2>
+      <div class="hours" data-hours tabindex="0" role="region" aria-labelledby="hours-h"></div>
+    </section>
+
+    <section class="block" aria-labelledby="days-h">
+      <h2 id="days-h" class="h2">{s.nextDays}</h2>
+      <ol class="days" data-days></ol>
+    </section>
+
+    {
+      b.info && (
+        <section class="block" aria-labelledby="info-h">
+          <h2 id="info-h" class="h2">{s.aboutBeach}</h2>
+          <dl class="info">
+            {b.info.water && (
+              <div>
+                <dt>{s.waterQuality}</dt>
+                <dd class={`q q-${b.info.water.quality}`}>{s.quality[b.info.water.quality]}</dd>
+                <dd class="info-note">{s.waterNote(b.info.water.season, prettyWater(b.info.water.name) ?? b.name)}</dd>
+              </div>
+            )}
+            {b.info.blueFlag && (
+              <div>
+                <dt>{s.blueFlag}</dt>
+                <dd>{s.blueFlagYear(b.info.blueFlag.year)}</dd>
+                {b.info.blueFlag.name !== b.name && <dd class="info-note">{b.info.blueFlag.name}</dd>}
+              </div>
+            )}
+            {b.info.lengthM != null && b.info.lengthM >= 50 && (
+              <div>
+                <dt>{s.length}</dt>
+                <dd>{b.info.lengthM.toLocaleString(lang === 'gl' ? 'gl-ES' : 'es-ES')} m</dd>
+              </div>
+            )}
+            {b.info.sand && (
+              <div>
+                <dt>{s.sand}</dt>
+                <dd>{b.info.sand}</dd>
+              </div>
+            )}
+          </dl>
+          <p class="fine muted">{s.infoSources}</p>
+        </section>
+      )
+    }
+
+    <section class="block" aria-labelledby="near-h">
+      <h2 id="near-h" class="h2">{s.nearby}</h2>
+      <ul class="near-grid">
+        {nearby.map((x) => <CamTile lang={lang} beach={x} />)}
+      </ul>
+    </section>
+
+    <p class="fine muted credits">
+      {s.forecastBy}: <a href="https://open-meteo.com/">Open-Meteo</a> (CC BY 4.0).
+      {s.camera}: {b.cams.map((c, i) => <>{i > 0 && ', '}<a href={c.page} rel="noopener">{c.provider}</a></>)}.
+    </p>
+  </div>
+
+  <script type="application/json" id="beach-strings" set:html={JSON.stringify(strings)} />
+</Base>
+
+<script>
+  import { initBeach } from '../scripts/beach';
+  initBeach();
+</script>
+
+<style>
+  .page {
+    padding-top: 1.25rem;
+  }
+  .crumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--ink-2);
+  }
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.25rem 0 1.25rem;
+  }
+  h1 {
+    font-size: var(--step-5);
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .where {
+    margin: 0.4rem 0 0;
+    font-size: var(--step-1);
+  }
+  .save {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: none;
+  }
+  .save:hover {
+    border-color: var(--ink);
+  }
+  .save[aria-pressed='true'] {
+    color: var(--accent);
+    border-color: var(--accent);
+    --fav-fill: var(--accent);
+  }
+  .top {
+    display: grid;
+    gap: 1.5rem;
+  }
+  @media (min-width: 62rem) {
+    .top {
+      grid-template-columns: minmax(0, 1.75fr) minmax(17rem, 1fr);
+      align-items: start;
+    }
+  }
+  .h2 {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--step-2);
+    margin: 0 0 0.75rem;
+  }
+  .now {
+    border-top: 1px solid var(--ink);
+    padding-top: 0.75rem;
+  }
+  .now-main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+  }
+  .now-ico :global(svg) {
+    width: 48px;
+    height: 48px;
+  }
+  .now-temp {
+    font-size: var(--step-4);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .now-sky {
+    flex-basis: 100%;
+    color: var(--ink-2);
+  }
+  .now-feels {
+    margin: 0.25rem 0 1rem;
+    font-size: var(--step--1);
+  }
+  .facts {
+    margin: 0;
+    display: grid;
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--rule);
+  }
+  .facts dt {
+    color: var(--ink-2);
+  }
+  .facts dd {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+  }
+  .facts :global(.sub) {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+  }
+  .stamp {
+    font-size: var(--step--1);
+    margin: 0.75rem 0 0;
+  }
+  .block {
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+  .tide {
+    min-height: 10rem;
+  }
+  .tide :global(svg) {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .fine {
+    font-size: var(--step--1);
+    max-width: 70ch;
+  }
+  .hours {
+    overflow-x: auto;
+    border-top: 1px solid var(--ink);
+    scrollbar-width: thin;
+  }
+  .hours :global(table) {
+    border-collapse: collapse;
+    min-width: max-content;
+  }
+  .hours :global(th),
+  .hours :global(td) {
+    padding: 0.45rem 0.6rem;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--rule);
+    font-weight: 400;
+  }
+  .hours :global(th[scope='row']) {
+    position: sticky;
+    left: 0;
+    background: var(--paper);
+    text-align: left;
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    padding-left: 0;
+    z-index: 1;
+  }
+  .hours :global(thead th) {
+    font-weight: 600;
+  }
+  .hours :global(.is-now) {
+    color: var(--accent);
+  }
+  .hours :global(.daybreak) {
+    border-left: 1px solid var(--ink);
+  }
+  .hours :global(.cell-ico) {
+    display: inline-flex;
+  }
+  .hours :global(.wind-cell) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+  }
+  .days {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .days :global(li) {
+    display: grid;
+    grid-template-columns: 4.5rem 2rem minmax(5rem, 1fr) repeat(3, minmax(4.5rem, auto));
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  @media (max-width: 40rem) {
+    .days :global(li) {
+      grid-template-columns: 3.5rem 2rem 1fr auto;
+    }
+    .days :global(.d-wind),
+    .days :global(.d-wave) {
+      display: none;
+    }
+  }
+  .days :global(.d-name) {
+    font-weight: 600;
+  }
+  .days :global(.d-range) {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+  .days :global(.d-min) {
+    color: var(--ink-2);
+  }
+  .days :global(.d-rain),
+  .days :global(.d-wind),
+  .days :global(.d-wave) {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    display: inline-flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+  .info {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    gap: 1rem;
+    border-top: 1px solid var(--ink);
+    padding-top: 0.75rem;
+  }
+  .info dt {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+  }
+  .info dd {
+    margin: 0;
+    font-size: var(--step-1);
+  }
+  .info .info-note {
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    margin-top: 0.15rem;
+  }
+  .q::before {
+    content: '';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 0.4em;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    vertical-align: 0.02em;
+  }
+  .q-excellent::before,
+  .q-good::before {
+    background: currentColor;
+  }
+  .q-excellent,
+  .q-good {
+    color: var(--ok);
+  }
+  .q-poor {
+    color: var(--warn);
+  }
+  .near-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2rem 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+  }
+  .credits {
+    margin-top: 2.5rem;
+  }
+</style>

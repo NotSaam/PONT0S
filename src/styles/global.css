@@ -1,0 +1,175 @@
+/*
+  PONT0S · sistema visual.
+  - Base de la marca (como KAIR0S): grafito y titanio, tema oscuro.
+  - Acento propio del proyecto: naranja boya, el de las boyas y Salvamento Marítimo. Marca las
+    cámaras en el mapa, el «ahora» y las acciones; nada más.
+  - El mapa es una carta náutica de noche: agua en grafito, bandas de sonda azuladas, tierra en
+    grafito claro y cada cámara como una luz.
+  - Tipografía: en las cartas el agua se rotula en cursiva y la tierra en redonda. Los nombres de
+    playa y mar van en Source Serif cursiva; datos e interfaz en Atkinson Hyperlegible.
+*/
+
+:root {
+  /* Marca: grafito y titanio */
+  --graphite-black: #0e0f12;
+  --graphite-surface: #16181d;
+  --graphite-elevated: #1e2127;
+  --titanium-line: #2c3037;
+  --titanium-gray: #8c9298;
+  --titanium-light: #eceef1;
+  /* Acento de PONT0S */
+  --boia: #ff8a3d;
+  --boia-deep: #e06a1f;
+
+  /* Roles */
+  --paper: var(--graphite-black);
+  --paper-2: var(--graphite-surface);
+  --ink: var(--titanium-light);
+  --ink-2: var(--titanium-gray);
+  --ink-3: #6b7178;
+  --rule: var(--titanium-line);
+  --accent: var(--boia);
+  --accent-deep: var(--boia-deep);
+  --on-accent: var(--graphite-black);
+
+  /* Carta náutica de noche */
+  --shoal: #131c24;
+  --shoal-2: #182633;
+  --contour: #233545;
+  --land: var(--graphite-elevated);
+  --coastline: #6f7880;
+
+  --ok: #6fcf97;
+  --warn: #f2c94c;
+
+  --serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --sans: 'Atkinson Hyperlegible Next Variable', 'Atkinson Hyperlegible Next', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Escala modular 1,25 sobre 17 px */
+  --step--1: 0.85rem;
+  --step-0: 1.0625rem;
+  --step-1: 1.33rem;
+  --step-2: 1.66rem;
+  --step-3: 2.07rem;
+  --step-4: 2.6rem;
+  --step-5: clamp(2.6rem, 2rem + 4.2vw, 5.2rem);
+
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --max: 82rem;
+  --radius: 3px;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--step-0);
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  overflow-x: clip;
+}
+
+img,
+svg,
+iframe,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Rotulación de agua: cursiva de carta */
+.hydro {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+.muted {
+  color: var(--ink-2);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  z-index: 10;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 0.75rem;
+}
+
+.skip:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

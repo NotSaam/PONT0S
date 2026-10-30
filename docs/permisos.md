@@ -24,11 +24,11 @@ Tienen muchas cámaras de playas gallegas, pero sus condiciones no dejan reprodu
 
 | Red | Quién es | Qué dicen | Contacto |
 |---|---|---|---|
-| Hispacams | Himalia Tecnologías S.L. | «Sin autorización previa por escrito» no se puede «utilizar, reproducir, transmitir» ([aviso legal](https://www.hispacams.com/aviso-legal/), apartado 4) | Formulario de [anunciarse](https://www.hispacams.com/anunciarse/) o [instala tu webcam](https://www.hispacams.com/de-interes/instala-tu-webcam/) |
+| Hispacams | Himalia Tecnologías S.L. | «Sin autorización previa por escrito» no se puede «utilizar, reproducir, transmitir» ([aviso legal](https://www.hispacams.com/aviso-legal/), apartado 4). **Denegado el 2026-10-30**: no autorizan integrar sus cámaras en plataformas externas, porque el tráfico sostiene su red. No volver a pedirlo ni añadir sus cámaras | info@hispacams.com |
 | Camaramar | Streamingsurf Iberia S.L. | No se ceden al usuario derechos de explotación ([aviso legal](https://www.camaramar.com/aviso-legal)) | info@camaramar.com |
 | SkylineWebcams | SkylineWebcams | Prohíben reproducir los fotogramas; sus páginas no se dejan enmarcar | [condiciones](https://www.skylinewebcams.com/en/terms-of-use.html) |
 
-### Correo para Hispacams y Camaramar
+### Correo para Camaramar (también se envió a Hispacams, que dijo que no)
 
 > Asunto: Permiso para mostrar vuestras cámaras de Galicia en PONT0S
 >

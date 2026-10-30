@@ -40,3 +40,7 @@ Tienen muchas cámaras de playas gallegas, pero sus condiciones no dejan reprodu
 >
 > Gracias,
 > Samuel
+
+## Cámaras de la TVG vía Windy
+
+Varias cámaras de Windy (Orzán, Ferrol, Muxía, Fisterra, O Grove, Silgar, Portonovo, Baiona, A Guarda, Pontevedra…) son en origen de la CRTVG/G24, que Windy redistribuye. PONT0S las muestra por el canal de Windy, con sus condiciones (imagen enlazada a windy.com) y el crédito «Imagen: Windy.com». Decidido el 2026-10-30: se mantienen. Si la CRTVG pidiera retirarlas, se quitan de `src/data/beaches.json`.
